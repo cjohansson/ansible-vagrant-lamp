@@ -1,0 +1,63 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    vhosts:
+    - servername: "dev.site1.com"
+      serveradmin: "admin@example.com"
+      documentroot: "/var/www/Site1/public/"
+      errorlog: "/var/www/Site1/private/error.log"
+      accesslog: "/var/www/Site1/private/access.log"
+      listen_ip: '*'
+      listen_port: '80'
+    - servername: "dev.site2.se"
+      serveradmin: "admin@example.com"
+      documentroot: "/var/www/Site2/public/"
+      errorlog: "/var/www/Site2/private/error.log"
+      accesslog: "/var/www/Site2/private/access.log"
+      listen_ip: '*'
+      listen_port: '80'
+  tasks:
+  - name: VIM
+    apt: name=vim state=present
+  - name: Apache2
+    apt: name=apache2 state=present
+  - name: Create a VirtualHost file all virtual-hosts
+    template:
+      src=templates/vhost.conf.j2
+      dest=/etc/apache2/sites-available/000-default.conf
+      owner=root
+      group=root
+      mode=0644
+    notify:
+      - restart apache2
+  - name: Apache2 mod_rewrite
+    apache2_module: name=rewrite state=present
+    notify:
+      - restart apache2
+  - name: PHP
+    apt: name=php5 state=present
+    notify:
+      - restart apache2
+  - name: ModPHP
+    apt: name=libapache2-mod-php5
+    notify:
+      - restart apache2
+  - name: MySQL for PHP
+    apt: name=php5-mysql state=present
+    notify:
+      - restart apache2
+  - name: MySQL server
+    apt: name=mysql-server state=present
+  - name: MySQL client
+    apt: name=mysql-client state=present
+  - name: Python MysqlDB
+    apt: name=python-mysqldb state=present
+  - name: MySQL database for Site1 
+    mysql_db: name=site1 state=present 
+  - name: MySQL user for Site1
+    mysql_user: name=site1 host=localhost password=pass1 priv=site1.*:ALL state=present
+  - name: MySQL user for Site2
+    mysql_user: name=site2 host=localhost password=site2 priv=site2.*:ALL state=present
+  - name: MySQL database for Site2 
+    mysql_db: name=site2 state=present 
