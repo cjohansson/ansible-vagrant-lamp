@@ -47,17 +47,26 @@
     apt: name=php5-mysql state=present
     notify:
       - restart apache2
+  - name: Curl for PHP
+    apt: name=php5-curl state=present
+    notify:
+      - restart apache2
   - name: MySQL server
     apt: name=mysql-server state=present
   - name: MySQL client
     apt: name=mysql-client state=present
-  - name: Python MysqlDB
+  - name: Python MySQLDB
     apt: name=python-mysqldb state=present
-  - name: MySQL database for Site1 
-    mysql_db: name=site1 state=present 
+  - name: MySQL database for Site1
+    mysql_db: name=site1 state=present
   - name: MySQL user for Site1
     mysql_user: name=site1 host=localhost password=pass1 priv=site1.*:ALL state=present
   - name: MySQL user for Site2
     mysql_user: name=site2 host=localhost password=site2 priv=site2.*:ALL state=present
-  - name: MySQL database for Site2 
-    mysql_db: name=site2 state=present 
+  - name: MySQL database for Site2
+    mysql_db: name=site2 state=present
+  - name: Apache2 started
+    service: name=apache2 state=started
+  - name: MySQL started
+    service: name=mysql state=started
+
