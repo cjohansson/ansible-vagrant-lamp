@@ -1,0 +1,5 @@
+.vagrant/
+playbook.yml
+.DS_Store
+playbook.retry
+

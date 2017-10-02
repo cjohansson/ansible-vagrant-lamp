@@ -8,7 +8,7 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = false
   config.vm.synced_folder '../.', '/var/www', owner: 'www-data', group: 'www-data'
   config.vm.provider :virtualbox do |v|
-    v.memory = 256
+    v.memory = 4096
     v.linked_clone = true
   end
 
