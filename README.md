@@ -20,7 +20,7 @@ This repository shows how to easily create a Vagrant LAMP server using ansible. 
 1. Copy `playbook.sample.yml` to `playbook.yml`
 2. Make desired changes if you want any to `playbook.yml`
 2. Visit project folder in shell
-3. Execute `vagrant up` to start if machine if stopped and `vagrant provision` if you have made changes while the machine is running
+3. Execute `vagrant up --provision` to start and provision machine
 
 # Connect via SSH
 
