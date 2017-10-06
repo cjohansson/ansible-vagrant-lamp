@@ -1,6 +1,6 @@
 # Ansible Vagrant LAMP
 
-This repository shows how to easily create a Vagrant LAMP server using ansible. It uses Debian, Apache2, PHP5, MySQL.
+This repository shows how to easily create a Vagrant LAMP server using ansible. It uses Debian 8, Apache 2, PHP7, MySQL 5.6.
 
 # Install
 
